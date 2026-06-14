@@ -77,4 +77,3 @@ A community-maintained reference list is available here:
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
