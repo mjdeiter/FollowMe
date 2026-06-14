@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.2.0] - 2026-06-14
+
+### Added
+- `SCRIPT_VERSION` constant and update check on load, matching the approach used in [ItemPass](https://github.com/mjdeiter/ItemPass):
+  - On startup, the script fetches the latest `FollowMe.lua` from `https://raw.githubusercontent.com/mjdeiter/FollowMe/main/FollowMe.lua` via `curl.exe` (through `io.popen`) and parses its `SCRIPT_VERSION`.
+  - If a newer version is available, prints an "Update available" message (with a link to the repo) to the MQ chat window.
+  - If the check fails (no `curl`, no network, etc.), prints a brief failure message and continues running normally — the update check never blocks or breaks the script.
+- The FollowMe window title now shows the current version, e.g. `FollowMe v1.2.0`.
+
 ## [1.1.0] - 2026-06-14
 
 ### Added

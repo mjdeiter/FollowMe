@@ -69,6 +69,13 @@ A community-maintained reference list is available here:
 - [MacroQuest](https://www.macroquest.org/) (Next/Lua build)
 - The `mq` and `ImGui` Lua modules (bundled with MacroQuest's Lua support)
 - The `e3bcg` plugin/bot command set (e.g. via EQBC/E3) for the broadcast `/nav` command to work as intended
+- `curl.exe` (built into Windows 10/11 at `C:\Windows\System32\curl.exe`) for the update check on load
+
+## Update check
+
+On load, FollowMe fetches the latest `FollowMe.lua` from this repo's `main` branch and compares its `SCRIPT_VERSION` to your local copy. If a newer version is available, it prints a notice (with a link to this repo) to the MQ chat window — it does not download or apply the update automatically. The current version is also shown in the window title bar (e.g. `FollowMe v1.2.0`).
+
+If the check fails for any reason (offline, `curl` missing, etc.), it prints a short message and the script continues running normally.
 
 ## Notes / Limitations
 

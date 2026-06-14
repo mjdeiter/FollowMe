@@ -7,6 +7,36 @@
 local mq    = require('mq')
 local imgui = require('ImGui')
 
+---------------------------------------------------------------------
+-- VERSION / UPDATE CHECK
+---------------------------------------------------------------------
+local SCRIPT_VERSION = "1.2.0" -- semantic version: MAJOR.MINOR.PATCH
+
+-- checkForUpdate: fetches FollowMe.lua from GitHub on load and notifies
+-- in the MQ chat window if a newer SCRIPT_VERSION is available.
+local function checkForUpdate()
+    print('\\ayFollowMe: Checking for updates...')
+    local url = 'https://raw.githubusercontent.com/mjdeiter/FollowMe/main/FollowMe.lua'
+    local ok, handle = pcall(io.popen, 'C:\\Windows\\System32\\curl.exe -s --connect-timeout 5 --max-time 8 "' .. url .. '" 2>nul')
+    if not ok or not handle then
+        print('\\arFollowMe: Update check failed (io.popen).')
+        return
+    end
+    local body = handle:read('*a')
+    handle:close()
+    if not body or #body == 0 then
+        print('\\arFollowMe: Update check: no response from curl.')
+        return
+    end
+    local latest = body:match('SCRIPT_VERSION%s*=%s*"([%d%.]+)"')
+    if latest and latest ~= SCRIPT_VERSION then
+        print(string.format('\\agFollowMe: Update available: v%s (you have v%s)', latest, SCRIPT_VERSION))
+        print('\\agFollowMe: Get it at: https://github.com/mjdeiter/FollowMe')
+    else
+        print(string.format('\\agFollowMe v%s is up to date.', SCRIPT_VERSION))
+    end
+end
+
 -- State
 local open      = true
 local enabled   = false
@@ -88,7 +118,7 @@ local function renderGUI()
 
     imgui.SetNextWindowSize(260, 0, ImGuiCond.FirstUseEver)
     local show
-    open, show = imgui.Begin('FollowMe', open)
+    open, show = imgui.Begin(string.format('FollowMe v%s', SCRIPT_VERSION), open)
 
     if show then
         imgui.Text('Interval (seconds):')
@@ -201,6 +231,9 @@ local function renderGUI()
 end
 
 mq.imgui.init('FollowMe', renderGUI)
+
+print(string.format('\\agFollowMe v%s Loaded', SCRIPT_VERSION))
+checkForUpdate()
 
 while open do
     inStandbyZone = standbyActive and isInStandbyZone()
