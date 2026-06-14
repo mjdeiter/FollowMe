@@ -1,6 +1,6 @@
 # FollowMe.lua
 
-A [MacroQuest](https://www.macroquest.org/) Lua script for EverQuest that periodically issues a follow/navigation command toward a designated "driver" character, with a small ImGui control panel.
+A [MacroQuest](https://www.macroquest.org/) Lua script for the [Project Lazarus](https://www.lazaruseq.com/) EverQuest emulator server that periodically issues a follow/navigation command toward a designated "driver" character, with a small ImGui control panel.
 
 ## What it does
 
